@@ -1,2 +1,2 @@
 # e-school
-aplikasi memanage kegiatan persekolahan khususnya smk
+apps for home schooling aspecially for senior high school 
