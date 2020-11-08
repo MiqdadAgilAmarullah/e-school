@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
+import 'anim.dart';
 import 'package:login_page/login.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -17,8 +19,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
+    Future.delayed(Duration(milliseconds: 12000), () {
+      setState(() {
+        _isOff = 1;
+      });
+    });
 
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 10), () {
       Navigator.push(
           context,
           PageTransition(
@@ -26,8 +33,14 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  int _isOff = 0;
   @override
   Widget build(BuildContext context) {
+    // disable auto orientation
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -75,7 +88,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Column(
                     children: [
                       Padding(padding: EdgeInsets.only(top: 20)),
-                      CircularProgressIndicator(),
                       Padding(padding: EdgeInsets.only(top: 20)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -94,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           ),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.only(top: 40)),
+                      Padding(padding: EdgeInsets.only(top: 50)),
                       Text(
                         "Created By KARANGTARUNA DEVELOPER",
                         style: TextStyle(
@@ -105,7 +117,10 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   ))
             ],
-          )
+          ),
+          Container(
+              padding: EdgeInsets.only(top: 200),
+              child: _isOff == 1 ? Text("") : ColorLoader3()),
         ],
       ),
     );
