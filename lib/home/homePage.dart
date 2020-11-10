@@ -1,154 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:login_page/home/home.dart';
 import 'package:login_page/home/materi/MateriPage.dart';
 import 'package:login_page/home/tugas/TugasPage.dart';
+import 'package:login_page/login.dart';
 
 class HomePage extends StatefulWidget {
+  final Data data;
+  HomePage({this.data});
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey _scaffoldKey = new GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // drawerEdgeDragWidth: 0,
-      key: _scaffoldKey,
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xff1E64B9),
-              ),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 40.0,
-                      backgroundImage: AssetImage("assets/img.jpg"),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text("Miqdad Agil Amarullah",
-                        style: TextStyle(color: Colors.white)),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text("Elektronika Audio Video",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontWeight: FontWeight.normal)),
-                  ],
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.date_range),
-              title: Text('Raport'),
-            ),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profile'),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-            ),
-          ],
-        ),
-      ),
+
       body: Material(
         child: Container(
-          color: Colors.white,
+          color: Colors.blueGrey[50],
           child: Column(children: <Widget>[
             Stack(
               children: <Widget>[
                 Container(
-                  height: 300,
+                  height: 200,
                   decoration: BoxDecoration(
                       color: Color(0xff1E64B9),
                       borderRadius:
                           BorderRadius.only(bottomRight: Radius.circular(40))),
                 ),
-                AppBar(
-                  elevation: 0.0,
-                  backgroundColor: Colors.transparent,
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.school,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        " E-School",
-                        style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  actions: <Widget>[
-                    IconButton(
-                        icon: Icon(
-                          Icons.search,
-                          color: Colors.transparent,
-                        ),
-                        onPressed: null)
-                  ],
-                ),
                 Container(
-                  margin: EdgeInsets.only(top: 100),
+                  // margin: EdgeInsets.only(top: 100),
                   height: 160,
                   child: Container(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Selamat Datang",
+                            "Selamat Datang,",
                             style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.left,
                           ),
                           Container(
                             margin: EdgeInsets.only(bottom: 5),
                             width: 300,
-                            child: Text(
-                              "MIQDAD AGIL AMARULLAH",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25),
+                            child: FutureBuilder(
+                              future: FlutterSession().get("nama"),
+                              builder: (context, snapshot) {
+                                return Text(
+                                  snapshot.hasData
+                                      ? snapshot.data
+                                      : "loading...",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              },
                             ),
                           ),
-                          Text(
-                            "Jurusan Elektronika Audio Video",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700),
-                            textAlign: TextAlign.left,
+                          Container(
+                            height: 20,
+                            child: FutureBuilder(
+                              future: FlutterSession().get("jurusan"),
+                              builder: (context, snapshot) {
+                                return Text(
+                                  snapshot.hasData
+                                      ? snapshot.data.toString()
+                                      : "loading...",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              },
+                            ),
                           ),
-                          Text(
-                            "Masuk Terakhir Okt, 17 2020 17:52:00",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                            textAlign: TextAlign.left,
+                          Container(
+                            height: 20,
+                            child: FutureBuilder(
+                              future: FlutterSession().get("logged"),
+                              builder: (context, snapshot) {
+                                return Text(
+                                  snapshot.hasData
+                                      ? "Masuk Terakhir " +
+                                          snapshot.data.toString()
+                                      : "loading...",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400),
+                                );
+                              },
+                            ),
                           ),
                         ]),
                     padding: EdgeInsets.all(20),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 250, left: 30, right: 30),
+                  margin: EdgeInsets.only(top: 150, left: 30, right: 30),
                   height: 100,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                     color: Colors.white,
                     boxShadow: [
                       //background color of box
@@ -181,9 +137,21 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  "Dear Miqdad",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Container(
+                                  height: 20,
+                                  child: FutureBuilder(
+                                    future: FlutterSession().get("nama"),
+                                    builder: (context, snapshot) {
+                                      return Text(
+                                        snapshot.hasData
+                                            ? "Dear " + snapshot.data.toString()
+                                            : "loading...",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      );
+                                    },
+                                  ),
                                 ),
                                 Text(
                                   "5 Hari Lagi menuju UAS!! Lebih giat Lagi belajar ya",
@@ -194,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 370),
+                  margin: EdgeInsets.only(top: 270),
                   padding: EdgeInsets.all(20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -299,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 450),
+                  margin: EdgeInsets.only(top: 350),
                   padding: EdgeInsets.all(20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

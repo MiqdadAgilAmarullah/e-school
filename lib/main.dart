@@ -6,6 +6,10 @@ import 'package:login_page/login.dart';
 import 'package:page_transition/page_transition.dart';
 
 void main() => runApp(MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/second': (context) => MyApp(),
+      },
       theme: ThemeData(primaryColor: Colors.lightBlueAccent),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
@@ -26,10 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     Future.delayed(Duration(seconds: 10), () {
-      Navigator.push(
-          context,
-          PageTransition(
-              type: PageTransitionType.leftToRightWithFade, child: MyApp()));
+      Navigator.pushNamed(context, '/second');
     });
   }
 

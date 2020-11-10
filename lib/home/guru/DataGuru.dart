@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:login_page/home/homePage.dart';
+// ignore: unused_import
 import 'package:login_page/home/home.dart';
 
 class DataGuru extends StatefulWidget {
@@ -47,60 +48,21 @@ class _DataGuruState extends State<DataGuru> {
     return Scaffold(
       body: Material(
         child: Container(
-          color: Colors.white,
+          color: Colors.blueGrey[50],
           child: Column(children: [
             Stack(
               children: <Widget>[
                 Container(
-                  height: 116,
+                  height: 40,
                   decoration: BoxDecoration(
                       color: Color(0xff1E64B9),
                       borderRadius:
                           BorderRadius.only(bottomRight: Radius.circular(30))),
                 ),
-                AppBar(
-                  leading: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => Home(),
-                      ));
-                    },
-                  ),
-                  elevation: 0.0,
-                  backgroundColor: Colors.transparent,
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.school,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        " E-School",
-                        style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  actions: <Widget>[
-                    IconButton(
-                        icon: Icon(
-                          Icons.search,
-                          color: Colors.transparent,
-                        ),
-                        onPressed: null)
-                  ],
-                ),
                 Center(
                   child: Container(
                       color: Colors.transparent,
-                      margin: EdgeInsets.only(top: 80),
+                      margin: EdgeInsets.only(top: 10),
                       child: Text(
                         "Data Guru",
                         style: TextStyle(

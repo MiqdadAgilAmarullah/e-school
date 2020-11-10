@@ -34,7 +34,7 @@ dependencies:
   http: ^0.12.2
   image_picker: ^0.6.7+12
   page_transition: ^1.1.7+2
-  
+  flutter_session:
 dev_dependencies:
   flutter_test:
     sdk: flutter

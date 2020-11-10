@@ -1,14 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'home/home.dart';
-import 'package:page_transition/page_transition.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      home: MyHomePage(),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Login',
+        home: MyHomePage(),
+      ),
     );
   }
 }
@@ -18,7 +25,88 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// store data ke class
+class Data {
+  final String nama;
+  final String kelas;
+  final String foto;
+  final String jurusan;
+  Data({this.nama, this.kelas, this.foto, this.jurusan});
+}
+
 class _MyHomePageState extends State<MyHomePage> {
+  TextEditingController user = new TextEditingController();
+  TextEditingController pass = new TextEditingController();
+
+  String msg = "";
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(msg),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('back'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+// ignore: missing_return
+  Future<List> _login() async {
+    final response = await http
+        .post("http://192.168.43.181/api_eschool/index.php/api/login", body: {
+      "username": user.text,
+      "password": pass.text,
+    });
+
+    print(response.body);
+    var map = json.decode(response.body);
+
+    if (map == "0") {
+      setState(() {
+        msg = "login gagal";
+      });
+      _showMyDialog();
+    } else {
+      await FlutterSession().set("nama", map[0]['txt_nama']);
+      await FlutterSession().set("kelas", map[0]['int_kelas']);
+      await FlutterSession().set("foto", map[0]['txt_url_foto']);
+      await FlutterSession().set("jurusan", map[0]['txt_jurusan']);
+      await FlutterSession().set("logged", map[0]['date_logged']);
+      // ignore: unused_local_variable
+      var data = Data(
+        nama: map[0]['txt_nama'],
+        kelas: map[0]['int_kelas'],
+        foto: map[0]['txt_url_foto'],
+        jurusan: map[0]['txt_jurusan'],
+      );
+      // String nama = map[0]['txt_nama'];
+      if (map[0]['int_level'] == "2") {
+        // print(kelas);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => Home(
+            data: data,
+          ),
+        ));
+      } else {}
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -128,6 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             children: <Widget>[
                               TextField(
+                                controller: user,
                                 style: TextStyle(fontSize: 18),
                               ),
                             ],
@@ -152,6 +241,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             children: <Widget>[
                               TextField(
+                                obscureText: true,
+                                controller: pass,
                                 style: TextStyle(fontSize: 18),
                               ),
                             ],
@@ -183,11 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(color: Colors.white),
                       ))),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.leftToRightWithFade,
-                            child: Home()));
+                    _login();
                   },
                 ),
                 SizedBox(
