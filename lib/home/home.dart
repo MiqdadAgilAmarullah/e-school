@@ -153,6 +153,7 @@ class _StateHome extends State<Home> {
                   Icons.home,
                   color: Colors.white,
                 ),
+                // ignore: deprecated_member_use
                 title: Text(
                   "Home",
                   style: TextStyle(color: Colors.white),
@@ -160,9 +161,10 @@ class _StateHome extends State<Home> {
                 backgroundColor: Colors.white),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.calendar_view_day,
+                  Icons.schedule_outlined,
                   color: Colors.white,
                 ),
+                // ignore: deprecated_member_use
                 title: Text(
                   "Jadwal",
                   style: TextStyle(color: Colors.white),
@@ -170,9 +172,10 @@ class _StateHome extends State<Home> {
                 backgroundColor: Colors.white),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.loyalty,
+                  Icons.emoji_events,
                   color: Colors.white,
                 ),
+                // ignore: deprecated_member_use
                 title: Text(
                   "prestasi",
                   style: TextStyle(color: Colors.white),
@@ -180,9 +183,10 @@ class _StateHome extends State<Home> {
                 backgroundColor: Colors.white),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.assignment_ind,
+                  Icons.supervised_user_circle_outlined,
                   color: Colors.white,
                 ),
+                // ignore: deprecated_member_use
                 title: Text(
                   "Guru",
                   style: TextStyle(color: Colors.white),
@@ -190,9 +194,10 @@ class _StateHome extends State<Home> {
                 backgroundColor: Colors.white),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.calendar_today,
+                  Icons.event,
                   color: Colors.white,
                 ),
+                // ignore: deprecated_member_use
                 title: Text(
                   "Absensi",
                   style: TextStyle(color: Colors.white),

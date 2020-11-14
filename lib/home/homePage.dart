@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
-import 'package:login_page/home/home.dart';
 import 'package:login_page/home/materi/MateriPage.dart';
 import 'package:login_page/home/tugas/TugasPage.dart';
 import 'package:login_page/login.dart';
@@ -171,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                         child: Row(
                           children: <Widget>[
                             Container(
-                              child: Icon(Icons.calendar_today),
+                              child: Icon(Icons.calendar_today_outlined),
                               margin: EdgeInsets.all(10),
                               width: 20,
                               height: 53,
@@ -214,7 +213,7 @@ class _HomePageState extends State<HomePage> {
                         child: Row(
                           children: <Widget>[
                             Container(
-                              child: Icon(Icons.laptop_chromebook),
+                              child: Icon(Icons.devices),
                               margin: EdgeInsets.all(10),
                               width: 20,
                               height: 53,
@@ -276,7 +275,7 @@ class _HomePageState extends State<HomePage> {
                         child: Row(
                           children: <Widget>[
                             Container(
-                              child: Icon(Icons.book),
+                              child: Icon(Icons.book_outlined),
                               margin: EdgeInsets.all(10),
                               width: 20,
                               height: 53,
@@ -320,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                         child: Row(
                           children: <Widget>[
                             Container(
-                              child: Icon(Icons.assignment),
+                              child: Icon(Icons.assignment_outlined),
                               margin: EdgeInsets.all(10),
                               width: 20,
                               height: 53,

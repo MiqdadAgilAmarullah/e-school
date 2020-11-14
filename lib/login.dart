@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'home/home.dart';
@@ -95,6 +95,13 @@ class _MyHomePageState extends State<MyHomePage> {
         foto: map[0]['txt_url_foto'],
         jurusan: map[0]['txt_jurusan'],
       );
+      // savesession
+      SharedPreferences preference = await SharedPreferences.getInstance();
+      setState(() {
+        preference.setString("kelas", map[0]['int_kelas']);
+        preference.setString("jurusan", map[0]['txt_jurusan']);
+      });
+
       // String nama = map[0]['txt_nama'];
       if (map[0]['int_level'] == "2") {
         // print(kelas);

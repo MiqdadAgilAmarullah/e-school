@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'anim.dart';
 import 'package:login_page/login.dart';
-import 'package:page_transition/page_transition.dart';
 
 void main() => runApp(MaterialApp(
       initialRoute: '/',
