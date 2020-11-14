@@ -73,7 +73,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
       ),
       home: Scaffold(
         body: Container(
-          color: Colors.black12,
+          color: Colors.white,
           height: 535,
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 0),
@@ -150,7 +150,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
                         child: Text(
                           "${widget.mapel}",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.w400),
                         ),
                       ),
                       Divider(),
@@ -173,7 +173,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
                         ],
                       ),
                       Container(
-                        padding: EdgeInsets.all(8),
+                        padding: EdgeInsets.all(5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

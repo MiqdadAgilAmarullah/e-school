@@ -26,7 +26,7 @@ class _KumpulanTugasState extends State<KumpulanTugas> {
     return Scaffold(
       body: Material(
           child: Container(
-        color: Colors.white,
+        color: Colors.blueGrey[50],
         child: Column(
           children: <Widget>[
             Stack(
@@ -102,7 +102,7 @@ class _KumpulanTugasState extends State<KumpulanTugas> {
                           )
                         ],
                         borderRadius: BorderRadius.all(Radius.circular(5)),
-                        color: Color(0xffF9F9F6),
+                        color: Colors.white,
                       ),
                       height: 53,
                       child: Row(

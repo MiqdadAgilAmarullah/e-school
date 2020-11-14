@@ -41,14 +41,14 @@ class _KumpulanMateriState extends State<KumpulanMateri> {
     //   print("url: ${element.foto}");
     // });
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && jsonBody == "0") {
+      myAllData = [];
+      setState(() {});
+    } else if (response.statusCode == 200) {
       for (var data in jsonBody) {
         myAllData.add(Materi(data['txt_pelajaran'], data['txt_guru'],
             data['txt_foto'], data['txt_video']));
       }
-      setState(() {});
-    } else if (response.statusCode == 200 && jsonBody == "0") {
-      myAllData = [];
       setState(() {});
     }
   }
@@ -64,7 +64,7 @@ class _KumpulanMateriState extends State<KumpulanMateri> {
     return Scaffold(
       body: Material(
         child: Container(
-          color: Colors.white,
+          color: Colors.blueGrey[50],
           child: Column(
             children: [
               Stack(
@@ -121,7 +121,7 @@ class _KumpulanMateriState extends State<KumpulanMateri> {
               Container(
                 height: 500,
                 child: myAllData.length == 0
-                    ? Center(child: CircularProgressIndicator())
+                    ? Center(child: Text("Tidak ada materi"))
                     : _showMyUi(),
               ),
             ],
@@ -132,63 +132,67 @@ class _KumpulanMateriState extends State<KumpulanMateri> {
   }
 
   Widget _showMyUi() {
-    return ListView.builder(
-        itemCount: myAllData.length,
-        itemBuilder: (context, index) {
-          return Container(
-            height: 53,
-            margin: EdgeInsets.only(bottom: 20),
-            decoration: BoxDecoration(
-              boxShadow: [
-                //background color of box
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 6.0, // soften the shadow
-                  //extend the shadow
-                  offset: Offset(
-                    3.0, // Move to right 10  horizontally
-                    6.0, // Move to bottom 10 Vertically
-                  ),
-                )
-              ],
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              color: Color(0xffF9F9F6),
-            ),
-            child: Row(
-              children: <Widget>[
-                Container(width: 60, child: Icon(Icons.videocam)),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => ChewieDemo(
-                              mapel: '${myAllData[index].judul}',
-                              linkVid: '${myAllData[index].url}',
-                              guru: '${myAllData[index].guru}',
-                              foto: '${myAllData[index].foto}',
-                            )));
-                  },
-                  child: Container(
-                      width: 130,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(' ${myAllData[index].judul}'),
-                        ],
-                      )),
+    return ListView.separated(
+      itemCount: myAllData.length,
+      itemBuilder: (context, index) {
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 15),
+          height: 53,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+            boxShadow: [
+              //background color of box
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0, // soften the shadow
+                //extend the shadow
+                offset: Offset(
+                  3.0, // Move to right 10  horizontally
+                  6.0, // Move to bottom 10 Vertically
                 ),
-                VerticalDivider(
-                  color: Colors.grey,
+              )
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: Colors.white,
+            // color: Colors.blue,
+          ),
+          child: Row(
+            children: <Widget>[
+              Container(width: 35, child: Icon(Icons.videocam)),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => ChewieDemo(
+                            mapel: '${myAllData[index].judul}',
+                            linkVid: '${myAllData[index].url}',
+                            guru: '${myAllData[index].guru}',
+                            foto: '${myAllData[index].foto}',
+                          )));
+                },
+                child: Container(
+                    width: 130,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(' ${myAllData[index].judul}'),
+                      ],
+                    )),
+              ),
+              VerticalDivider(
+                color: Colors.grey,
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Center(
+                  child: Text("${myAllData[index].guru}"),
                 ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Center(
-                    child: Text("${myAllData[index].guru}"),
-                  ),
-                )
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+    );
   }
 }

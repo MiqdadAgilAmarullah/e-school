@@ -205,52 +205,55 @@ class _MyHomePageState extends State<MyHomePage> {
                                         fontSize: 20),
                                   )),
                             ]),
-                        Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                  margin: EdgeInsets.only(top: 65, left: 20),
-                                  child: Text(
-                                    "Username",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff3977AE),
-                                        fontSize: 15),
-                                  )),
-                            ]),
                         Container(
                           margin: EdgeInsets.only(top: 75, left: 20, right: 20),
                           child: Column(
                             children: <Widget>[
                               TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 1.0),
+                                  ),
+                                  hintText: "Username",
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blue, width: 1.0),
+                                  ),
+                                ),
                                 controller: user,
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.blueGrey[40],
+                                    fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),
                         ),
-                        Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                  margin: EdgeInsets.only(top: 150, left: 20),
-                                  child: Text(
-                                    "Password",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff3977AE),
-                                        fontSize: 15),
-                                  )),
-                            ]),
                         Container(
                           margin:
                               EdgeInsets.only(top: 160, left: 20, right: 20),
                           child: Column(
                             children: <Widget>[
                               TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 1.0),
+                                  ),
+                                  hintText: "Password",
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blue, width: 1.0),
+                                  ),
+                                ),
                                 obscureText: true,
+                                obscuringCharacter: "*",
                                 controller: pass,
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.blueGrey[40],
+                                    fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),

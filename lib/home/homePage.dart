@@ -178,12 +178,13 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Container(
                                       padding: EdgeInsets.all(10),
                                       width: 100,
                                       child: Text(
-                                        "jadwal pelajaran hari ini",
+                                        "jadwal hari ini",
                                         style: TextStyle(fontSize: 12),
                                       ))
                                 ],
