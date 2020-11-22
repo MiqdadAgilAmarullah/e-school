@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Stack(
             children: <Widget>[
               Container(
-                color: Colors.white,
+                color: Colors.blueGrey[50],
               ),
               Container(
                 height: 270,

@@ -22,18 +22,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 12000), () {
-      setState(() {
-        _isOff = 1;
-      });
-    });
 
     Future.delayed(Duration(seconds: 10), () {
       Navigator.pushNamed(context, '/second');
     });
   }
 
-  int _isOff = 0;
   @override
   Widget build(BuildContext context) {
     // disable auto orientation
@@ -118,9 +112,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ))
             ],
           ),
-          Container(
-              padding: EdgeInsets.only(top: 200),
-              child: _isOff == 1 ? Text("") : ColorLoader3()),
+          Container(padding: EdgeInsets.only(top: 200), child: ColorLoader3()),
         ],
       ),
     );

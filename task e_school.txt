@@ -1,0 +1,30 @@
+aplikasi e_school
+
+*siswa*
+
+[x]menampilkan materi sesuai session siswa
+[x]menampilkan profil siswa dan foto sesuai session
+[x]login semua user
+[x]logout semua user
+[]uploading absensi sesuai session
+[]menampilkan data guru dan detail nya
+[]mengupload tugas sesuai kelas dan jurusan
+[]melihat tugas sesuai kelas dan jurusan
+[]melihat jadwal pelajaran hari ini
+[]melihat jadwal pelajaran semuanya
+
+
+
+*guru*
+
+[]mengupload video materi sesuai kelas dan jurusan
+[]melihat riwayat absensi sesuai kelas dan jurusan untuk wali kelas
+[]melihat tugas siswa yg dikumpulkan sesuai kelas dan jurusan
+[]mengupdate soal tugas
+
+
+
+*admin*
+
+[]mengupdate main news
+[]mengupdate jadwal pelajaran semua kelas dan jurusan

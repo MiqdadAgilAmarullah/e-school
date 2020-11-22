@@ -121,7 +121,11 @@ class _KumpulanMateriState extends State<KumpulanMateri> {
               Container(
                 height: 500,
                 child: myAllData.length == 0
-                    ? Center(child: Text("Tidak ada materi"))
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                        ),
+                      )
                     : _showMyUi(),
               ),
             ],

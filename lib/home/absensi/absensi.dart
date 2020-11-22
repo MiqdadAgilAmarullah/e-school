@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+// import 'package:path/path.dart';
+import 'package:file_picker/file_picker.dart';
 // ignore: unused_import
 import 'package:login_page/home/home.dart';
 
@@ -13,6 +18,36 @@ class Absensi extends StatefulWidget {
 class _AbsensiState extends State<Absensi> {
   var finaldate1;
   var finaldate2;
+  String base64Image;
+  String messageUpload = "";
+  File _image;
+  String url = "http://192.168.43.181/api_eschool/index.php/api/do_upload";
+
+  Future<void> _showuploadDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(messageUpload),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('back'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   void callDatePicker() async {
     var order1 = await getDate();
@@ -22,24 +57,54 @@ class _AbsensiState extends State<Absensi> {
     });
   }
 
-  File _image;
   final picker = ImagePicker();
 
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        base64Image = base64Encode(_image.readAsBytesSync());
       } else {
         print('No image selected.');
       }
     });
   }
 
+  Future getCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        base64Image = base64Encode(_image.readAsBytesSync());
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  upload() {
+    String fileName = _image.path.split("/").last;
+    mulaiupload(fileName);
+  }
+
+  mulaiupload(String fileName) {
+    http.post(url, body: {
+      "image": base64Image,
+      "name": fileName,
+    }).then((result) {
+      setState(() {
+        messageUpload = result.body;
+        _showuploadDialog();
+        _image = null;
+      });
+      print(result.body);
+    });
+  }
+
   Future<DateTime> getDate() {
-    // Imagine that this function is7
-    // more complex and slow.
     return showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -56,7 +121,6 @@ class _AbsensiState extends State<Absensi> {
 
   void callDatePicker2() async {
     var order2 = await getDate2();
-
     setState(() {
       finaldate2 = order2;
     });
@@ -294,20 +358,37 @@ class _AbsensiState extends State<Absensi> {
                                         ),
                                 ),
                                 Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
                                         margin:
                                             EdgeInsets.only(top: 5, left: 10),
                                         child: Column(
                                           children: [
-                                            RaisedButton(
-                                                child: Text("Pilih"),
-                                                onPressed: getImage),
+                                            Container(
+                                              child: RaisedButton(
+                                                  color: Colors.grey[200],
+                                                  child: Text("Pilih"),
+                                                  onPressed: getImage),
+                                            ),
+                                            Container(
+                                              child: RaisedButton(
+                                                color: Colors.grey[200],
+                                                child: Icon(
+                                                    Icons.camera_alt_outlined),
+                                                onPressed: getCamera,
+                                              ),
+                                            ),
                                             _image == null
                                                 ? Text("")
-                                                : RaisedButton(
-                                                    onPressed: () {},
-                                                    child: Text("Upload"),
+                                                : Container(
+                                                    child: RaisedButton(
+                                                      textColor: Colors.white,
+                                                      color: Colors.blueAccent,
+                                                      onPressed: upload,
+                                                      child: Text("Upload"),
+                                                    ),
                                                   )
                                           ],
                                         )),
