@@ -5,8 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
-// import 'package:path/path.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+
 // ignore: unused_import
 import 'package:login_page/home/home.dart';
 
@@ -16,8 +17,10 @@ class Absensi extends StatefulWidget {
 }
 
 class _AbsensiState extends State<Absensi> {
+  TextEditingController deskripsi = new TextEditingController();
   var finaldate1;
   var finaldate2;
+
   String base64Image;
   String messageUpload = "";
   File _image;
@@ -85,22 +88,45 @@ class _AbsensiState extends State<Absensi> {
     });
   }
 
-  upload() {
+  upload() async {
     String fileName = _image.path.split("/").last;
-    mulaiupload(fileName);
+    SharedPreferences preference = await SharedPreferences.getInstance();
+    String session = preference.getString("nama");
+    String kelas = preference.getString("kelas");
+    String jurusan = preference.getString("jurusan");
+    // print(session);
+    if (finaldate1 == null || finaldate2 == null || deskripsi.text == "") {
+      setState(() {
+        messageUpload = "tolong isi data absen dengan lengkap";
+        _showuploadDialog();
+      });
+    } else {
+      mulaiupload(fileName, session, kelas, jurusan);
+    }
   }
 
-  mulaiupload(String fileName) {
+  mulaiupload(String fileName, String session, String kelas, String jurusan) {
+    var now = new DateTime.now();
     http.post(url, body: {
       "image": base64Image,
       "name": fileName,
+      "tanggal": DateFormat("dd-MM-yyyy").format(now).toString(),
+      "session": session,
+      "kelas": kelas,
+      "jurusan": jurusan,
+      "date1": finaldate1.toString(),
+      "date2": finaldate2.toString(),
+      "deskripsi": deskripsi.text,
     }).then((result) {
       setState(() {
         messageUpload = result.body;
         _showuploadDialog();
         _image = null;
+        finaldate1 = null;
+        finaldate2 = null;
+        deskripsi.text = "";
       });
-      print(result.body);
+      print(messageUpload);
     });
   }
 
@@ -127,8 +153,6 @@ class _AbsensiState extends State<Absensi> {
   }
 
   Future<DateTime> getDate2() {
-    // Imagine that this function is7
-    // more complex and slow.
     return showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -322,6 +346,7 @@ class _AbsensiState extends State<Absensi> {
                                 bottom: 5,
                               ),
                               child: TextField(
+                                controller: deskripsi,
                                 scrollPadding:
                                     EdgeInsets.symmetric(vertical: 10),
                                 style: TextStyle(fontSize: 12),

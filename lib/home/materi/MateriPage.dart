@@ -23,7 +23,8 @@ class _KumpulanMateriState extends State<KumpulanMateri> {
   // ambil list judul materi sesuai session siswa
 
   // ignore: non_constant_identifier_names
-  Future<Materi> _load_materi() async {
+  // ignore: missing_return
+  Future<Materi> _loadMateri() async {
     SharedPreferences preference = await SharedPreferences.getInstance();
     String kelas = preference.getString("kelas");
     String jurusan = preference.getString("jurusan");
@@ -56,7 +57,7 @@ class _KumpulanMateriState extends State<KumpulanMateri> {
   @override
   void initState() {
     super.initState();
-    _load_materi();
+    _loadMateri();
   }
 
   @override

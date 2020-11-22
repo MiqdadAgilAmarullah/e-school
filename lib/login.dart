@@ -100,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         preference.setString("kelas", map[0]['int_kelas']);
         preference.setString("jurusan", map[0]['txt_jurusan']);
+        preference.setString("nama", map[0]['txt_nama']);
       });
 
       // String nama = map[0]['txt_nama'];

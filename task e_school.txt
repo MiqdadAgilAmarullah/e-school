@@ -6,7 +6,7 @@ aplikasi e_school
 [x]menampilkan profil siswa dan foto sesuai session
 [x]login semua user
 [x]logout semua user
-[]uploading absensi sesuai session
+[x]uploading absensi sesuai session
 []menampilkan data guru dan detail nya
 []mengupload tugas sesuai kelas dan jurusan
 []melihat tugas sesuai kelas dan jurusan
