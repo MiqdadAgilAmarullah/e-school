@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         preference.setString("nama", map[0]['txt_nama']);
       });
 
-      // String nama = map[0]['txt_nama'];
+      // halaman untuk siswa
       if (map[0]['int_level'] == "2") {
         // print(kelas);
         Navigator.of(context).push(MaterialPageRoute(
@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
             data: data,
           ),
         ));
-      } else {}
+      } else if (map[0]['int_level'] == "3") {}
     }
   }
 

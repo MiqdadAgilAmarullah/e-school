@@ -1,47 +1,46 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-// import 'package:login_page/home/homePage.dart';
-// ignore: unused_import
-import 'package:login_page/home/home.dart';
+import 'package:http/http.dart' as http;
 
 class DataGuru extends StatefulWidget {
   @override
   _DataGuruState createState() => _DataGuruState();
 }
 
+class Guru {
+  final String nip, nama, foto;
+
+  Guru(this.nip, this.nama, this.foto);
+}
+
 class _DataGuruState extends State<DataGuru> {
-  final List<String> guru = <String>[
-    'Ahmad Abror',
-    'Lusi Sri',
-    'Budi pekerti',
-    'Kelvin',
-    'Yati Lisyati',
-    'Jojo',
-    'Asep Setiawan',
-    'Mumu Arifin',
-    'Tantowi Ahmad',
-  ];
-  final List<String> pelajaran = <String>[
-    'Fisika',
-    'Matematika',
-    'Kimia',
-    'Teknik Gambar',
-    'Dasar Listrik',
-    'Home Theater',
-    'Teknik Digital',
-    'Agama',
-    'Kewirausahaan',
-  ];
-  final List<String> foto = <String>[
-    'assets/guru1.jpg',
-    'assets/guru3.jpg',
-    'assets/guru3.jpeg',
-    'assets/guru2.jpg',
-    'assets/guru4.jpeg',
-    'assets/guru6.jpg',
-    'assets/guru7.jpg',
-    'assets/guru8.jpg',
-    'assets/guru9.jpg',
-  ];
+  List<Guru> allGuru = [];
+
+  Future<Guru> _loadGuru() async {
+    final response =
+        await http.post("http://192.168.43.181/api_eschool/index.php/api/guru");
+
+    String responseBody = response.body;
+    var jsonBody = json.decode(responseBody);
+
+    if (response.statusCode == 200 && jsonBody == "0") {
+      allGuru = [];
+      setState(() {});
+    } else if (response.statusCode == 200) {
+      for (var data in jsonBody) {
+        allGuru.add(Guru(
+            data['int_NIP'].toString(), data['txt_nama'], data['txt_foto']));
+      }
+      setState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadGuru();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,55 +74,64 @@ class _DataGuruState extends State<DataGuru> {
             ),
             Container(
               height: 450,
-              child: GridView.count(
-                // Create a grid with 2 columns. If you change the scrollDirection to
-                // horizontal, this produces 2 rows.
-                crossAxisCount: 2,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(guru.length, (index) {
-                  return Center(
-                      child: Container(
-                    height: 150,
-                    width: 155,
-                    padding: EdgeInsets.all(8),
-                    child: Column(
-                      children: <Widget>[
-                        CircleAvatar(
-                          radius: 45,
-                          backgroundImage: AssetImage("${foto[index]}"),
-                        ),
-                        Divider(),
-                        Text('${guru[index]}'),
-                        Text(
-                          '${pelajaran[index]}',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        //background color of box
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 6.0, // soften the shadow
-                          //extend the shadow
-                          offset: Offset(
-                            3.0, // Move to right 10  horizontally
-                            6.0, // Move to bottom 10 Vertically
-                          ),
-                        )
-                      ],
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      color: Color(0xffF9F9F6),
-                    ),
-                  ));
-                }),
-              ),
+              child: allGuru.length == 0
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                      ),
+                    )
+                  : uiGuru(),
             ),
           ]),
         ),
       ),
+    );
+  }
+
+  Widget uiGuru() {
+    return GridView.count(
+      // Create a grid with 2 columns. If you change the scrollDirection to
+      // horizontal, this produces 2 rows.
+      crossAxisCount: 2,
+      // Generate 100 widgets that display their index in the List.
+      children: List.generate(allGuru.length, (index) {
+        return Center(
+            child: Container(
+          height: 150,
+          width: 155,
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: <Widget>[
+              CircleAvatar(
+                radius: 45,
+                backgroundImage: NetworkImage("${allGuru[index].foto}"),
+              ),
+              Divider(),
+              Text('${allGuru[index].nama}'),
+              Text(
+                '${allGuru[index].nip}',
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+          decoration: BoxDecoration(
+            boxShadow: [
+              //background color of box
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0, // soften the shadow
+                //extend the shadow
+                offset: Offset(
+                  3.0, // Move to right 10  horizontally
+                  6.0, // Move to bottom 10 Vertically
+                ),
+              )
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: Color(0xffF9F9F6),
+          ),
+        ));
+      }),
     );
   }
 }
