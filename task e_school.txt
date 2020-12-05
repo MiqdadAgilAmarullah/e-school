@@ -8,11 +8,11 @@ aplikasi e_school
 [x]logout semua user
 [x]uploading absensi sesuai session
 [x]menampilkan data guru dan detail nya
-[]mengupload tugas sesuai kelas dan jurusan
+[]mengupload tugas sesuai kelas, mapel dan jurusan 
 []melihat tugas sesuai kelas dan jurusan
 []melihat jadwal pelajaran hari ini
 []melihat jadwal pelajaran semuanya
-[]melihat absensi atau izin yang sudah dikirim
+[x]melihat absensi atau izin yang sudah dikirim
 
 *guru*
 

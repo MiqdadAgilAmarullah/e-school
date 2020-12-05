@@ -3,6 +3,7 @@ import 'package:login_page/login.dart';
 import './homePage.dart';
 import './guru/DataGuru.dart';
 import './absensi/absensi.dart';
+import './absensi/absenmu.dart';
 import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
@@ -137,9 +138,16 @@ class _StateHome extends State<Home> {
                 leading: Icon(Icons.account_circle),
                 title: Text('Profile'),
               ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => Absenmu(),
+                  ));
+                },
+                child: ListTile(
+                  leading: Icon(Icons.calendar_today_outlined),
+                  title: Text('Absenmu'),
+                ),
               ),
             ],
           ),

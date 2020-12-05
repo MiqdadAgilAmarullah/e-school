@@ -107,9 +107,12 @@ class _DataGuruState extends State<DataGuru> {
                 backgroundImage: NetworkImage("${allGuru[index].foto}"),
               ),
               Divider(),
-              Text('${allGuru[index].nama}'),
               Text(
-                '${allGuru[index].nip}',
+                '${allGuru[index].nama}',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'NIP : ${allGuru[index].nip}',
                 style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
               ),
             ],
