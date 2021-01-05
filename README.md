@@ -1,5 +1,5 @@
 # e-school
-apps for home schooling aspecially for senior high school 
+apps for support school activity
 ## Screenshot
 <img src="https://user-images.githubusercontent.com/72175760/103604602-29a54700-4f44-11eb-887b-695626d72f27.png" width="200">
 <img src="https://user-images.githubusercontent.com/72175760/103604607-2b6f0a80-4f44-11eb-9e1f-2d00ffa6f9e3.png" width="200">
